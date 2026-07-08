@@ -1,4 +1,4 @@
-```markdown
+
 # 🎓 COM4AI Learn
 
 > **Learn AI. Build AI. Share AI. Together.**
@@ -38,4 +38,3 @@ This project is licensed under the **MIT License**.
 ---
 
 **Together, let's make AI education open, collaborative, and accessible to everyone.**
-```
