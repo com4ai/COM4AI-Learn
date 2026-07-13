@@ -307,6 +307,175 @@ Understanding these limitations is essential when building reliable AI applicati
 
 ---
 
+# Building Your First LLM Application
+
+Before building an LLM-powered application, the first decision is **which language model to use**. In practice, there are two common approaches:
+
+1. **Use a hosted LLM through an API**
+2. **Use an open-weight pretrained model**
+
+Both approaches use an **already trained model**. You are **not training the LLM from scratch**; instead, you are integrating an existing model into your application to perform inference.
+
+---
+
+# Option 1: Use a Hosted LLM
+
+In this approach, the language model is hosted by a cloud provider. Your application sends a request to the provider's API, the model processes the prompt, and the generated response is returned to your application.
+
+```text
+Your Application
+        │
+        ▼
+    LLM API
+        │
+        ▼
+ Hosted LLM
+        │
+        ▼
+    Response
+```
+
+Examples of hosted LLM providers include:
+
+- OpenAI
+- Anthropic
+- Google Gemini
+- Cohere
+
+### Advantages
+
+- No need to download or host the model.
+- No GPU infrastructure required.
+- Easy to get started.
+- The provider manages scaling, updates, and maintenance.
+
+### Disadvantages
+
+- Requires an internet connection.
+- API usage is typically billed.
+- Less control over the underlying model.
+
+### Example
+
+```python
+from openai import OpenAI
+
+client = OpenAI()
+
+response = client.responses.create(
+    model="gpt-5",
+    input="Explain self-attention in simple words."
+)
+
+print(response.output_text)
+```
+
+---
+
+# Option 2: Use an Open-Weight Model
+
+In this approach, you download a pretrained language model and run it on your own computer or server.
+
+```text
+Your Application
+        │
+        ▼
+ Local Inference
+        │
+        ▼
+Downloaded Model
+        │
+        ▼
+    Response
+```
+
+Popular open-weight model families include:
+
+- Llama
+- Mistral
+- Qwen
+- Gemma
+- Phi
+
+These models can be downloaded from platforms such as **Hugging Face** and executed locally using libraries such as **Transformers**, **Ollama**, **llama.cpp**, or **vLLM**.
+
+### Advantages
+
+- Full control over the model.
+- Can run without an internet connection.
+- Better privacy since data stays on your infrastructure.
+- Models can often be fine-tuned or customized.
+
+### Disadvantages
+
+- Requires local hardware (CPU or GPU).
+- You are responsible for deployment and maintenance.
+- Large models require significant memory and compute resources.
+
+### Example
+
+```python
+from transformers import pipeline
+
+generator = pipeline(
+    task="text-generation",
+    model="Qwen/Qwen2.5-0.5B-Instruct",
+)
+
+messages = [
+    {
+        "role": "user",
+        "content": "Explain self-attention in simple words."
+    }
+]
+
+response = generator(
+    messages,
+    max_new_tokens=100,
+)
+
+print(response[0]["generated_text"])
+```
+
+---
+
+# Comparison
+
+| Feature | Hosted LLM | Open-Weight Model |
+|---------|------------|-------------------|
+| Model Location | Cloud provider | Your computer or server |
+| Internet Required | Yes | Not necessarily |
+| GPU Required | No | Usually |
+| Setup Complexity | Low | Medium to High |
+| Infrastructure | Managed by the provider | Managed by you |
+| Customization | Limited | High |
+| Privacy | Data is sent to the provider | Data remains on your infrastructure |
+
+---
+
+# Which Approach Should You Choose?
+
+If you are building your **first LLM application**, using a **hosted LLM** is usually the easiest and fastest approach. It allows you to focus on learning how to interact with the model without worrying about infrastructure.
+
+If you need **greater control**, **offline execution**, **privacy**, or **model customization**, using an **open-weight model** is often the better choice.
+
+---
+
+# Summary
+
+There are two primary ways to build an LLM-powered application:
+
+- **Hosted LLM:** Access a model through an API managed by a cloud provider.
+- **Open-Weight Model:** Download and run a pretrained model on your own infrastructure.
+
+Both approaches allow you to leverage powerful language models without training them from scratch. The choice depends on your requirements for simplicity, cost, performance, privacy, and control.
+
+---
+
+# Next Step
+
+Now that you understand the available approaches, the next step is to learn **how an application communicates with a Large Language Model by sending prompts and receiving generated responses.**
+
 # Summary
 
 Large Language Models are the latest generation of Natural Language Processing systems. They are built on Transformer architectures and trained on massive amounts of data to understand and generate human language.
