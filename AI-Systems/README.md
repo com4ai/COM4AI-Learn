@@ -35,40 +35,113 @@ If you are new to AI System Engineering, it is recommended to begin with the the
 
 # Theoretical Questions Answered in This Folder
 
-The following questions provide the theoretical foundation for understanding modern AI systems.
+The following questions provide the theoretical foundation for the practical tutorials in this learning path. Each question is answered in detail in its own document.
 
-| # | Question |
-|---|----------|
-| T01 | What is an AI System? |
-| T02 | Why is AI System Engineering important? |
-| T03 | What are the components of an AI system? |
-| T04 | How does an AI system differ from a Machine Learning model? |
-| T05 | What is the lifecycle of an AI system? |
-| T06 | What is AI system architecture? |
-| T07 | What are the different layers of an AI system? |
-| T08 | How does data flow through an AI application? |
-| T09 | What happens from a user request to an AI response? |
-| T10 | What is model serving? |
-| T11 | What is an inference pipeline? |
-| T12 | What is Retrieval-Augmented Generation (RAG)? |
-| T13 | Why do AI systems use vector databases? |
-| T14 | What are embeddings? |
-| T15 | How do AI agents work? |
-| T16 | What are multi-agent systems? |
-| T17 | What is AI orchestration? |
-| T18 | What role do APIs play in AI systems? |
-| T19 | What is prompt engineering in production systems? |
-| T20 | What is MLOps? |
-| T21 | What is AI observability? |
-| T22 | How are AI systems monitored? |
-| T23 | How are AI systems scaled? |
-| T24 | What is Distributed AI? |
-| T25 | What is Edge AI? |
-| T26 | What is TinyML? |
-| T27 | How do AI systems handle failures? |
-| T28 | How is AI secured? |
-| T29 | What is AI governance? |
-| T30 | How are production AI systems evaluated? |
+### T01. What are the components of a modern AI system?
+
+A modern AI system is more than just an AI model. It typically includes a user interface, an application layer, a Large Language Model (LLM), memory, retrieval mechanisms, tools, orchestration logic, and deployment infrastructure. These components work together to deliver intelligent and interactive applications.
+
+---
+
+### T02. How does an AI application process a user request?
+
+When a user submits a request, the application prepares the input, retrieves any relevant context, invokes the AI model, and returns the generated response. Depending on the application, the system may also use memory, external tools, or databases before producing the final answer.
+
+---
+
+### T03. What is a Large Language Model (LLM)?
+
+A Large Language Model (LLM) is a deep learning model trained on massive amounts of text to understand and generate natural language. Instead of storing predefined answers, it predicts the most likely next token based on the input it receives.
+
+---
+
+### T04. How do Large Language Models generate responses?
+
+LLMs generate responses by predicting one token at a time using patterns learned during training. Each generated token becomes part of the input for predicting the next one, allowing the model to produce coherent and context-aware text.
+
+---
+
+### T05. What are prompts, context, and tokens?
+
+A prompt is the instruction or input given to an AI model, while context includes additional information that helps the model generate better responses. Tokens are the small units of text processed by the model, and both prompts and context are ultimately represented as sequences of tokens.
+
+---
+
+### T06. What is a chatbot?
+
+A chatbot is an application that enables users to interact with an AI model through natural language conversations. Modern chatbots combine user interfaces, prompts, conversation history, and AI models to provide intelligent and interactive assistance.
+
+---
+
+### T07. How do AI systems remember previous conversations?
+
+Because LLMs do not have permanent memory, AI applications manage conversation history externally. This can be achieved using context windows, memory buffers, databases, or vector stores to maintain continuity across interactions.
+
+---
+
+### T08. What are embeddings?
+
+Embeddings are numerical vector representations of data that capture semantic meaning. Similar concepts are mapped to nearby vectors, making embeddings essential for semantic search, recommendation systems, and Retrieval-Augmented Generation (RAG).
+
+---
+
+### T09. What is a vector database?
+
+A vector database stores embeddings and efficiently retrieves the most semantically similar information. Instead of searching for exact keywords, it searches based on meaning, making it ideal for AI applications that require knowledge retrieval.
+
+---
+
+### T10. What is Retrieval-Augmented Generation (RAG)?
+
+Retrieval-Augmented Generation (RAG) combines information retrieval with language generation. Before generating a response, the system retrieves relevant information from external knowledge sources and provides it to the AI model as additional context.
+
+---
+
+### T11. What are tools and function calling?
+
+Tools allow AI models to interact with external systems such as APIs, databases, search engines, or calculators. Function calling enables the model to decide when to invoke these tools and incorporate their results into its response.
+
+---
+
+### T12. What is an AI agent?
+
+An AI agent is an intelligent system capable of reasoning, planning, using tools, and performing actions to achieve a specific goal. Unlike a simple chatbot, an agent can make decisions and execute multi-step tasks autonomously.
+
+---
+
+### T13. What are AI workflows?
+
+AI workflows define the sequence of steps an AI application follows to complete a task. They coordinate interactions between models, tools, databases, and other services to produce reliable and repeatable results.
+
+---
+
+### T14. What are multi-agent systems?
+
+A multi-agent system consists of multiple AI agents that collaborate to solve complex problems. Each agent typically has a specialized role, allowing the system to divide work and improve efficiency.
+
+---
+
+### T15. How do AI agents communicate and collaborate?
+
+AI agents collaborate by exchanging information, delegating tasks, and sharing intermediate results. Effective communication allows multiple agents to coordinate their actions and solve problems that would be difficult for a single agent.
+
+---
+
+### T16. What is model serving?
+
+Model serving is the process of making a trained AI model available for inference through an API or application. It enables users and other software systems to interact with the model in real time.
+
+---
+
+### T17. What does it mean to deploy an AI application?
+
+Deploying an AI application means packaging, hosting, and operating it in an environment where users can access it. Deployment includes configuring infrastructure, scaling services, monitoring performance, and maintaining reliability.
+
+---
+
+### T18. What are the challenges of building production AI systems?
+
+Production AI systems must address challenges such as scalability, latency, reliability, security, monitoring, cost, and continuous improvement. Building a successful AI application requires much more than developing an accurate model.
 
 ---
 
