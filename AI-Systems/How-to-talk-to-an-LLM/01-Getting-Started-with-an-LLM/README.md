@@ -92,15 +92,25 @@ Examples include GPT, Claude, Gemini, Llama, Mistral, and Qwen.
 
 ---
 
-# 4. Types of Language Models
+## 4. Types of Language Models
 
-Different language models are optimized for different tasks.
+Modern Large Language Models (LLMs) are built using the **Transformer architecture**, introduced in the paper *Attention Is All You Need* (2017). The Transformer serves as the core neural network that enables models to understand context and generate text efficiently.
 
-| Model Type | Examples | Common Uses |
-|------------|----------|-------------|
-| Encoder | BERT, RoBERTa | Classification, Search, Embeddings |
-| Decoder | GPT, Llama, Claude, Qwen | Text Generation, Chatbots, Coding |
-| Encoder-Decoder | T5, BART, FLAN-T5 | Translation, Summarization |
+![Comparison of RNN/LSTM sequential processing and Transformer self-attention](assets/llm-transformer-comparison.png)
+
+Depending on how the Transformer is designed, language models can be grouped into three main types:
+
+- **Encoder models** focus on understanding and representing the input.
+- **Decoder models** generate text one token at a time based on the input and previously generated tokens.
+- **Encoder–Decoder models** first understand the input using an encoder and then generate an output using a decoder.
+
+Each architecture is optimized for different natural language processing (NLP) tasks. Most modern conversational AI systems, including GPT, Llama, Mistral, Claude, and Gemini, are based on **decoder-only Transformers** because they are particularly effective at text generation.
+
+| Model Type | Description | Examples | Best For |
+|------------|-------------|----------|----------|
+| **Encoder** | Reads and understands the input. Produces a representation (embedding) of the input but does not generate text. | BERT, RoBERTa | Classification, sentiment analysis, semantic search, embeddings |
+| **Decoder** | Generates text one token at a time based on previously generated tokens. This is the architecture used by most modern LLMs. | GPT-5, GPT-4, Llama, Mistral | Chatbots, AI assistants, code generation, text generation |
+| **Encoder–Decoder** | Uses an encoder to understand the input and a decoder to generate the output. | T5, BART, FLAN-T5 | Translation, summarization, question answering |
 
 ---
 
