@@ -463,21 +463,6 @@ If you need **greater control**, **offline execution**, **privacy**, or **model 
 
 # Summary
 
-There are two primary ways to build an LLM-powered application:
-
-- **Hosted LLM:** Access a model through an API managed by a cloud provider.
-- **Open-Weight Model:** Download and run a pretrained model on your own infrastructure.
-
-Both approaches allow you to leverage powerful language models without training them from scratch. The choice depends on your requirements for simplicity, cost, performance, privacy, and control.
-
----
-
-# Next Step
-
-Now that you understand the available approaches, the next step is to learn **how an application communicates with a Large Language Model by sending prompts and receiving generated responses.**
-
-# Summary
-
 Large Language Models are the latest generation of Natural Language Processing systems. They are built on Transformer architectures and trained on massive amounts of data to understand and generate human language.
 
 Understanding the concepts introduced in this chapter—including NLP, language model types, popular LLM families, the LLM ecosystem, tokens, inference, and model limitations—provides the foundation for everything that follows.
