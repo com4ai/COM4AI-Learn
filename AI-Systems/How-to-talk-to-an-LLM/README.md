@@ -14,34 +14,6 @@ Call an LLM from an application and handle its output.
 2. [Understanding LLM Requests](02-Understanding-LLM-Requests/README.md)
 3. [Building Your First LLM Application](03-Building-Your-First-LLM-Application/README.md)
 
-## 🤔 Why do we need this?
-
-LLMs are the core reasoning and language interface in many AI applications.
-
-## 🧠 Concepts
-
-Prompts, messages, tokens, model parameters, and responses.
-
-## 🏗 Architecture
-
-Application → LLM API → generated response.
-
-## 💻 Step-by-step Code
-
-Implementation instructions will be added here.
-
-## 🧪 Experiment
-
-Compare responses using different system instructions.
-
-## 🏆 Challenge
-
-Build a prompt that produces a reliable structured response.
-
 ## 📚 References
 
 Add the relevant documentation and learning resources here.
-
-## ➡️ Next Question
-
-[How to Build a Chatbot](../How-to-build-a-chatbot/README.md)
