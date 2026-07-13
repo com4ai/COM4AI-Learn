@@ -18,7 +18,7 @@
 - Distributed AI
 - AI Communication *(COM4AI specialization)*
 
-## 🤝 Contributing
+## 🤝 Contribution
 
 We welcome contributions from the community! You can contribute by:
 
