@@ -463,16 +463,16 @@ If you need **greater control**, **offline execution**, **privacy**, or **model 
 
 # Run the Hosted LLM Example
 
-This folder contains `setup.sh` and `app.py` for a small hosted-LLM application.
+This folder contains `setup_hosted_llm.sh` and `hosted_llm_app.py` for a small hosted-LLM application.
 
 Run the setup once:
 
 ```bash
-chmod +x setup.sh
-./setup.sh
+chmod +x setup_hosted_llm.sh
+./setup_hosted_llm.sh
 ```
 
-Set your API key in the terminal. Never add the key to `app.py` or commit it to GitHub.
+Set your API key in the terminal. Never add the key to `hosted_llm_app.py` or commit it to GitHub.
 
 ```bash
 export OPENAI_API_KEY="your_api_key_here"
@@ -482,7 +482,7 @@ Then run the application:
 
 ```bash
 source .venv/bin/activate
-python app.py
+python hosted_llm_app.py
 ```
 
 ---

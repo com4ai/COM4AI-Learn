@@ -9,4 +9,4 @@ python -m pip install openai
 
 echo "Setup complete."
 echo "Set your key with: export OPENAI_API_KEY=\"your_api_key_here\""
-echo "Then run: python app.py"
+echo "Then run: python hosted_llm_app.py"
