@@ -461,10 +461,34 @@ If you need **greater control**, **offline execution**, **privacy**, or **model 
 
 ---
 
+# Run the Hosted LLM Example
+
+This folder contains `setup.sh` and `app.py` for a small hosted-LLM application.
+
+Run the setup once:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+Set your API key in the terminal. Never add the key to `app.py` or commit it to GitHub.
+
+```bash
+export OPENAI_API_KEY="your_api_key_here"
+```
+
+Then run the application:
+
+```bash
+source .venv/bin/activate
+python app.py
+```
+
+---
+
 # Summary
 
 Large Language Models are the latest generation of Natural Language Processing systems. They are built on Transformer architectures and trained on massive amounts of data to understand and generate human language.
 
 Understanding the concepts introduced in this chapter—including NLP, language model types, popular LLM families, the LLM ecosystem, tokens, inference, and model limitations—provides the foundation for everything that follows.
-
-In the next chapter, **Understanding LLM Requests**, we will explore what happens internally when you send a prompt to an LLM and how it generates a response.
