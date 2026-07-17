@@ -487,6 +487,36 @@ python app.py
 
 ---
 
+# Run the Open-Weight Model Example
+
+This folder also contains a local open-weight example. It uses the lightweight `HuggingFaceTB/SmolLM2-135M-Instruct` model, so no API key or API billing is required.
+
+On macOS, install Python 3.12 first:
+
+```bash
+brew install python@3.12
+```
+
+Run the setup once:
+
+```bash
+chmod +x setup_open_weight.sh
+./setup_open_weight.sh
+```
+
+Then run the application:
+
+```bash
+source .venv-open-weight/bin/activate
+python open_weight_app.py
+```
+
+The first run downloads the model to your computer. Internet access is needed for that download; later runs use the cached model.
+
+The example uses Transformers 4.x and NumPy 1.x because they are compatible with the included local PyTorch installation. It runs on the CPU using 32-bit floats for compatibility with Macs where MPS does not support the model's BFloat16 format.
+
+---
+
 # Summary
 
 Large Language Models are the latest generation of Natural Language Processing systems. They are built on Transformer architectures and trained on massive amounts of data to understand and generate human language.
