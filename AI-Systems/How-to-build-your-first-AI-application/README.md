@@ -38,4 +38,4 @@ Add the relevant documentation and learning resources here.
 
 ## ➡️ Next Question
 
-[How to Talk to an LLM](../How-to-talk-to-an-LLM/README.md)
+[How to Talk to an LLM](../How-to-talk-to-an-LLM/01-Getting-Started-with-an-LLM/README.md)
