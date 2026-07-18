@@ -174,6 +174,14 @@ This small example demonstrates the agent loop with two safe tools:
 
 The `choose_action()` function plays the role of the agent's decision step. In a later example, an LLM will make that decision instead of simple rules.
 
+The complete runnable code is in [simple_agent.py](simple_agent.py). It uses only Python's standard library, so no virtual environment or package installation is required.
+
+Run it from this folder:
+
+```bash
+python3 simple_agent.py
+```
+
 ```python
 SUPPORT_GUIDE = {
     "hours": "Support is available Monday to Friday, 09:00 to 17:00 CET.",
