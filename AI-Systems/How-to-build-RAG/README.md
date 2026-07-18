@@ -197,7 +197,15 @@ This instruction reduces unsupported answers, but it does not guarantee accuracy
 
 ## What We Will Build
 
-Our first example will be a small command-line RAG application that:
+Our first example is a small command-line RAG application. It uses:
+
+- `knowledge_base.txt` as the document to search.
+- `sentence-transformers/all-MiniLM-L6-v2` to create embeddings and retrieve relevant chunks.
+- `HuggingFaceTB/SmolLM2-135M-Instruct` to generate an answer from the retrieved context.
+
+Both models are downloaded from Hugging Face on the first run. After the downloads finish, the application runs locally and does not send the document or question to an API.
+
+The application will:
 
 1. Loads a local text document.
 2. Splits it into chunks.
@@ -207,6 +215,50 @@ Our first example will be a small command-line RAG application that:
 6. Displays the answer and the source chunks.
 
 We will start with a simple local document so every step is visible. Later, the same ideas can be used with PDFs, websites, databases, larger vector stores, and a chatbot interface.
+
+## Run the First Local RAG Application
+
+This example requires Python 3.12. On macOS, install it if necessary:
+
+```bash
+brew install python@3.12
+```
+
+From this folder, create the virtual environment and install the dependencies:
+
+```bash
+chmod +x setup_rag.sh
+./setup_rag.sh
+```
+
+Then activate the environment and start the application:
+
+```bash
+source .venv-rag/bin/activate
+python rag_app.py
+```
+
+On the first run, the embedding model and LLM are downloaded. You can then try questions such as:
+
+```text
+What is the refund policy?
+When can I contact support?
+How do I receive a certificate?
+What is the capital of Turkey?
+```
+
+The last question is deliberately not in `knowledge_base.txt`. A well-grounded RAG answer should say that it does not know based on the supplied document, instead of answering from general model knowledge.
+
+## Understand the Code
+
+`rag_app.py` has four important stages:
+
+1. **Load and chunk:** `split_into_chunks()` divides `knowledge_base.txt` into smaller sections.
+2. **Embed:** `SentenceTransformer` converts every chunk into an embedding, once when the program starts.
+3. **Retrieve:** `retrieve()` embeds the user's question and compares it with the stored chunk embeddings. The two highest-scoring chunks become context.
+4. **Generate:** `answer_question()` sends the context and question to the local LLM, with instructions not to use information outside that context.
+
+Each answer also prints the retrieved chunks and their similarity scores. This makes it possible to check whether the retriever found the right information before trusting the LLM's answer.
 
 ## 📚 References
 
