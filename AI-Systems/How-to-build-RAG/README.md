@@ -195,28 +195,25 @@ This instruction reduces unsupported answers, but it does not guarantee accuracy
 | Sources are unclear | Metadata was not stored or displayed. | Store file names, pages, URLs, and chunk identifiers. |
 | Old information appears | The index is outdated. | Re-index documents when they change. |
 
-## What We Will Build
+## Project Files
 
-Our first example is a small command-line RAG application. It uses:
+```text
+How-to-build-RAG/
+├── README.md
+├── knowledge_base.txt
+├── rag_app.py
+└── setup_rag.sh
+```
 
-- `knowledge_base.txt` as the document to search.
-- `sentence-transformers/all-MiniLM-L6-v2` to create embeddings and retrieve relevant chunks.
-- `HuggingFaceTB/SmolLM2-135M-Instruct` to generate an answer from the retrieved context.
+| File | Purpose |
+|---|---|
+| `knowledge_base.txt` | The local support-guide document that RAG searches. Replace its contents later with your own information. |
+| `rag_app.py` | Loads the document, splits it into chunks, creates embeddings, retrieves relevant chunks, and asks the local LLM to answer using those chunks. |
+| `setup_rag.sh` | Creates the `.venv-rag` virtual environment and installs the required Python packages. |
 
-Both models are downloaded from Hugging Face on the first run. After the downloads finish, the application runs locally and does not send the document or question to an API.
+The application uses `sentence-transformers/all-MiniLM-L6-v2` for retrieval and `HuggingFaceTB/SmolLM2-135M-Instruct` to generate answers. Both models are downloaded from Hugging Face on the first run. After that, the document and questions remain on your computer; no API key is needed.
 
-The application will:
-
-1. Loads a local text document.
-2. Splits it into chunks.
-3. Creates embeddings for the chunks.
-4. Finds the most relevant chunks for a question.
-5. Sends the context and question to an LLM.
-6. Displays the answer and the source chunks.
-
-We will start with a simple local document so every step is visible. Later, the same ideas can be used with PDFs, websites, databases, larger vector stores, and a chatbot interface.
-
-## Run the First Local RAG Application
+## How to Run the Local RAG Application
 
 This example requires Python 3.12. On macOS, install it if necessary:
 
@@ -248,6 +245,169 @@ What is the capital of Turkey?
 ```
 
 The last question is deliberately not in `knowledge_base.txt`. A well-grounded RAG answer should say that it does not know based on the supplied document, instead of answering from general model knowledge.
+
+## File Contents
+
+### `knowledge_base.txt`
+
+This is the document that the application searches. You can replace it later with your own content.
+
+```text
+# COM4AI Learning Support Guide
+
+## Course access
+
+Every course enrolment includes access to the learning material for twelve months from the date of purchase. Learners can watch lessons at their own pace and may revisit completed lessons during the access period.
+
+## Refund policy
+
+You can request a refund within 30 days of purchase if you have completed less than 20 percent of the course. To request a refund, email support@com4ai.example with your order number and the email address used for the purchase. Approved refunds are returned to the original payment method within five business days.
+
+## Certificates
+
+Learners receive a completion certificate after finishing every required lesson and passing the final quiz with a score of at least 70 percent. Certificates are available from the course dashboard.
+
+## Support hours
+
+The support team replies to messages from Monday to Friday, 09:00 to 17:00 Central European Time. Messages received outside these hours are answered on the next business day.
+```
+
+### `setup_rag.sh`
+
+This script creates the virtual environment and installs the packages needed by the RAG application.
+
+```bash
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v python3.12 >/dev/null 2>&1; then
+    echo "Python 3.12 is required. On macOS, install it with: brew install python@3.12"
+    exit 1
+fi
+
+python3.12 -m venv .venv-rag
+source .venv-rag/bin/activate
+
+python -m pip install --upgrade pip
+python -m pip install "numpy<2" torch "transformers>=4.37,<5" sentence-transformers
+
+echo
+echo "Setup complete. Start the RAG application with:"
+echo "source .venv-rag/bin/activate"
+echo "python rag_app.py"
+```
+
+### `rag_app.py`
+
+```python
+from pathlib import Path
+
+import numpy as np
+import torch
+from sentence_transformers import SentenceTransformer
+from transformers import pipeline
+
+
+KNOWLEDGE_BASE_PATH = Path("knowledge_base.txt")
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+LLM_MODEL_NAME = "HuggingFaceTB/SmolLM2-135M-Instruct"
+CHUNK_SIZE = 500
+NUMBER_OF_RESULTS = 2
+
+
+def split_into_chunks(text: str, chunk_size: int) -> list[str]:
+    """Split text into readable chunks without cutting a paragraph when possible."""
+    paragraphs = [paragraph.strip() for paragraph in text.split("\n\n") if paragraph.strip()]
+    chunks = []
+    current_chunk = ""
+
+    for paragraph in paragraphs:
+        if current_chunk and len(current_chunk) + len(paragraph) + 2 > chunk_size:
+            chunks.append(current_chunk)
+            current_chunk = paragraph
+        else:
+            current_chunk = f"{current_chunk}\n\n{paragraph}".strip()
+
+    if current_chunk:
+        chunks.append(current_chunk)
+
+    return chunks
+
+
+def retrieve(question: str, chunks: list[str], chunk_embeddings: np.ndarray, embedding_model):
+    """Return the chunks whose embeddings are most similar to the question."""
+    question_embedding = embedding_model.encode(question, normalize_embeddings=True)
+    similarity_scores = chunk_embeddings @ question_embedding
+    result_indexes = np.argsort(similarity_scores)[-NUMBER_OF_RESULTS:][::-1]
+
+    return [(chunks[index], float(similarity_scores[index])) for index in result_indexes]
+
+
+def answer_question(question: str, context: str, generator) -> str:
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You answer questions using only the supplied context. "
+                "If the answer is not in the context, say: "
+                "I do not know based on the provided document."
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"Context:\n{context}\n\nQuestion: {question}",
+        },
+    ]
+    response = generator(messages, max_new_tokens=150, do_sample=False)
+    return response[0]["generated_text"][-1]["content"]
+
+
+def main():
+    if not KNOWLEDGE_BASE_PATH.exists():
+        print(f"Error: {KNOWLEDGE_BASE_PATH} was not found.")
+        return
+
+    print("Loading the document and embedding model...")
+    document = KNOWLEDGE_BASE_PATH.read_text(encoding="utf-8")
+    chunks = split_into_chunks(document, CHUNK_SIZE)
+
+    embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+    chunk_embeddings = embedding_model.encode(chunks, normalize_embeddings=True)
+
+    print("Loading the local LLM...")
+    generator = pipeline(
+        "text-generation",
+        model=LLM_MODEL_NAME,
+        device=-1,
+        torch_dtype=torch.float32,
+    )
+
+    print("RAG is ready. Ask about the support guide, or type 'exit' to stop.")
+
+    while True:
+        question = input("\nYou: ").strip()
+
+        if question.lower() == "exit":
+            print("Goodbye!")
+            break
+
+        if not question:
+            continue
+
+        results = retrieve(question, chunks, chunk_embeddings, embedding_model)
+        context = "\n\n---\n\n".join(chunk for chunk, _ in results)
+        answer = answer_question(question, context, generator)
+
+        print(f"\nAnswer: {answer}")
+        print("\nRetrieved source chunks:")
+        for number, (chunk, score) in enumerate(results, start=1):
+            print(f"\n[{number}] Similarity: {score:.3f}\n{chunk}")
+
+
+if __name__ == "__main__":
+    main()
+```
 
 ## Understand the Code
 
