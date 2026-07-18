@@ -1,15 +1,5 @@
 # How to Build a Chatbot
 
-## ❓ Question
-
-How do I turn an LLM application into a chatbot that can hold a conversation?
-
-## 🎯 Goal
-
-Understand what a chatbot is, choose an appropriate chatbot design, and prepare to build a simple text-based chatbot.
-
-## What Is a Chatbot?
-
 A chatbot is an application that exchanges messages with a user. Unlike a one-time LLM request, a chatbot keeps track of the conversation so that each new answer can use earlier messages as context.
 
 ```text
