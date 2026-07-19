@@ -186,7 +186,3 @@ Open `rule_based_ai.py` and add a new rule for snowy weather or strong wind. The
 - [Russell and Norvig, *Artificial Intelligence: A Modern Approach*](https://aima.cs.berkeley.edu/) — a comprehensive foundational AI textbook.
 - [Alan Turing, *Computing Machinery and Intelligence* (1950)](https://turingarchive.kings.cam.ac.uk/publications-lectures-and-talks-amtb/amt-b-9) — a seminal paper on machine intelligence.
 - [Goodfellow, Bengio, and Courville, *Deep Learning*](https://www.deeplearningbook.org/) — a foundational text for machine learning and neural networks.
-
-## Next Lesson
-
-[How Does Machine Learning Learn from Data?](../02-How-does-Machine-Learning-Learn-from-Data/README.md)
