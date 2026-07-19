@@ -123,7 +123,6 @@ The following practical questions demonstrate how the concepts introduced in the
 | P04 | `How-to-build-RAG` | How do I build a Retrieval-Augmented Generation (RAG) system? |
 | P05 | `How-to-build-an-AI-agent` | How do I build an AI agent? |
 | P06 | `How-to-build-multi-agent-systems` | How do I build a multi-agent system? |
-| P07 | `How-to-deploy-an-AI-application` | How do I deploy an AI application? |
 
 Each folder is self-contained and includes explanations, implementation steps, source code, and practical examples. You can work through them in order or jump directly to the topic that interests you.
 
