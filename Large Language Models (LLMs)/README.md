@@ -1,4 +1,4 @@
-# COM4AI Learn — AI Systems
+# COM4AI Learn — Large Language Models (LLMs)
 
 > Learn the principles, architecture, and engineering concepts behind modern AI systems.
 
@@ -121,8 +121,6 @@ The following practical questions demonstrate how the concepts introduced in the
 | P02 | `How-to-build-a-chatbot` | How do I build a chatbot? |
 | P03 | `How-to-make-an-AI-remember-conversations` | How do I make an AI remember previous conversations? |
 | P04 | `How-to-build-RAG` | How do I build a Retrieval-Augmented Generation (RAG) system? |
-| P05 | `How-to-build-an-AI-agent` | How do I build an AI agent? |
-| P06 | `How-to-build-multi-agent-systems` | How do I build a multi-agent system? |
 
 Each folder is self-contained and includes explanations, implementation steps, source code, and practical examples. You can work through them in order or jump directly to the topic that interests you.
 
