@@ -15,19 +15,17 @@ Idea → code and data → model → evaluation → application → deployment a
 | **Programming language** | Defines the application and data-processing logic. | Python, JavaScript/TypeScript. |
 | **Data tools** | Read, clean, transform, and visualize data. | pandas, NumPy, SQL, matplotlib. |
 | **ML framework** | Builds, trains, or evaluates machine-learning models. | scikit-learn, PyTorch, TensorFlow. |
-| **Model access** | Uses hosted APIs or downloads open-weight models. | OpenAI API, Hugging Face, Ollama. |
 | **Deployment tools** | Makes an AI application available to users. | FastAPI, Docker, cloud platforms. |
-| **Monitoring and evaluation** | Checks quality, cost, latency, and failures after release. | Logs, tests, dashboards, evaluation datasets. |
 
 ## A Practical Beginner Setup
 
 For the Foundations lessons, focus on the tools closest to the AI workflow:
 
 ```text
-Python + data tools + ML framework or model API + evaluation + deployment tools
+Python + data tools + ML framework + deployment tools
 ```
 
-This is enough to prepare data, use a model, test its outputs, and turn it into an application.
+This is enough to prepare data, build a model, and turn it into an application.
 
 ### Example: A Small AI Project
 
@@ -36,7 +34,6 @@ my-ai-project/
 ├── data/               # project data
 ├── app.py              # application code
 ├── model/              # trained model or model configuration
-├── tests/              # evaluation examples and automated tests
 ├── README.md           # instructions and explanation
 └── deploy/             # deployment configuration, when needed
 ```
@@ -107,48 +104,7 @@ Run a pretrained language model → Transformers or a model-serving tool
 
 Do not choose a complex framework merely because it is popular. Start with the simplest tool that can solve the problem and evaluate whether it works.
 
-## 4. Models: Hosted APIs and Open-Weight Models
-
-There are two main ways to use a modern AI model:
-
-```text
-Hosted model:       application → provider API → model response
-Open-weight model:  application → local/server inference → model response
-```
-
-| Approach | Common tools | What you manage |
-|---|---|---|
-| **Hosted API** | Provider SDKs and HTTP APIs. | Your application, prompts, security, costs, and integration. |
-| **Open-weight model** | Hugging Face, Ollama, llama.cpp, vLLM, Transformers. | Model files, hardware, inference, updates, and deployment. |
-
-### Example: First Chat Application
-
-```text
-Hosted API route:
-Python application → model API → generated reply
-
-Open-weight route:
-Python application → local model runtime → generated reply
-```
-
-A hosted API is often the simplest first step. An open-weight model can provide more control, local execution, or privacy, but it requires suitable hardware and more operational work.
-
-## 5. Testing and Evaluation Tools
-
-Every AI project needs a repeatable way to check that it still works after a change.
-
-### Example: Test Cases for a Support Assistant
-
-```text
-Test 1: A normal product question → answer is accurate
-Test 2: An unclear request → assistant asks a clarifying question
-Test 3: A request for private account data → assistant refuses or escalates safely
-Test 4: A provider outage → application shows a helpful error
-```
-
-Tools can include automated tests, an evaluation dataset, logs, manual review, and dashboards. The right choice depends on the AI task and its risks.
-
-## 6. Deployment and Operations Tools
+## 4. Deployment and Operations Tools
 
 After a local program works, deployment tools package it and make it available to users.
 
@@ -175,39 +131,72 @@ This protects secrets from accidental sharing in Git or screenshots.
 
 ## An End-to-End Beginner Workflow
 
-Imagine building a simple application that classifies support messages:
+As a project grows, automate repeated, predictable work. Automation makes the workflow reproducible: the same data preparation, training, checks, and deployment steps run in the same order every time.
 
 ```text
-1. Define the categories: billing, technical issue, general question
-2. Use pandas to inspect example messages and labels
-3. Prepare data and create useful features
-4. Build a first model with scikit-learn or call a hosted model API
-5. Evaluate it on held-out examples and inspect mistakes
-6. Add safety and error-handling tests
-7. Package the application as an API when it is ready for users
-8. Monitor errors, cost, latency, and output quality
-9. Improve the data, model, or prompts over time
+New or changed data
+        ↓
+Prepare data → train model → record results → deploy → monitor
+        ↑                                            ↓
+        └──────────── improve from evidence ────────┘
 ```
 
-The tools support the workflow; they are not the goal. Choose tools that keep your project understandable, reproducible, and safe.
+### What to Automate at Each Step
 
-## Recommended Learning Order
+```text
+Collect → Prepare → Version → Train → Track → Check → Deploy → Monitor → Retrain
+```
 
-1. Learn basic Python and how to work with data.
-2. Explore data with pandas, NumPy, and simple charts.
-3. Use scikit-learn for first structured-data models.
-4. Learn PyTorch or TensorFlow when you need neural networks.
-5. Use a hosted API or small open-weight model for AI applications.
-6. Evaluate results with test data, metrics, and error analysis.
-7. Add deployment, monitoring, and safety checks as projects grow.
+| Step | What to automate | Tool or framework for this step |
+|---|---|---|
+| **1. Collect data** | Fetch new files, database records, or events on a schedule. | Python scripts, SQL, APIs, Prefect, Airflow. |
+| **2. Validate and prepare data** | Check schema, missing values, duplicates, and transformations. | pandas, Great Expectations, scikit-learn `Pipeline`. |
+| **3. Version data** | Store the exact dataset reference used for every training run. | DVC, object storage, database snapshots. |
+| **4. Train a model** | Start training with fixed code, settings, and approved data. | scikit-learn, PyTorch, TensorFlow; Prefect or Airflow to schedule it. |
+| **5. Track experiments** | Save parameters, metrics, artifacts, and run details. | MLflow, Weights & Biases, structured logs. |
+| **6. Apply quality gates** | Compare metrics with release requirements. | scikit-learn metrics, Python tests, GitHub Actions. |
+| **7. Package and deploy** | Build and release an approved application version. | FastAPI, Docker, GitHub Actions, cloud deployment tools. |
+| **8. Monitor production** | Track errors, latency, input changes, and model outcomes. | Application logs, dashboards, MLflow, cloud monitoring. |
+| **9. Retrain or review** | Start a new workflow when schedules, data changes, or alerts require it. | Prefect schedules, Airflow schedules, GitHub Actions, human approval. |
+
+![Automating an AI workflow: tools for each step](ai-workflow-automation-tools.png)
+
+### The Role of Workflow Orchestration
+
+For a very small project, one Python script may be enough:
+
+```text
+prepare_data.py → train_model.py → evaluate_model.py
+```
+
+When a workflow has schedules, dependencies, retries, long-running jobs, or multiple systems, use an **orchestrator**. Tools such as Prefect and Airflow can schedule tasks, record their status, retry failures, and show where a workflow stopped.
+
+```text
+Scheduled workflow
+    ↓
+data task → training task → quality-check task → deployment task
+    ↓              ↓                ↓                   ↓
+ status           metrics          approval            release
+```
+
+### Keep Humans in the Loop
+
+Automation should not remove accountability. Use a human approval step when:
+
+- a new model will affect customers or important decisions;
+- performance is close to a release threshold;
+- data changes significantly;
+- the workflow handles sensitive information; or
+- a production alert indicates unexpected behavior.
+
+The goal is not to automate every decision. It is to automate repeatable work while keeping people responsible for high-impact choices.
 
 ## Key Takeaways
 
 - AI development uses a toolkit, not one single program or model.
 - Data tools, ML frameworks, and model runtimes should match the problem you are solving.
-- Hosted APIs simplify model access; open-weight models provide greater control but require more infrastructure.
 - Keep secrets and local environment folders out of Git.
-- Testing, evaluation, deployment, and monitoring are part of building a dependable AI application.
+- Deployment and monitoring help turn a local model into a dependable AI application.
 
 ## References
 
@@ -215,3 +204,7 @@ The tools support the workflow; they are not the goal. Choose tools that keep yo
 - [PyTorch Tutorials](https://docs.pytorch.org/tutorials/) — official learning resources for neural networks and deep learning.
 - [Hugging Face documentation](https://huggingface.co/docs) — documentation for open models, datasets, and machine-learning libraries.
 - [FastAPI documentation](https://fastapi.tiangolo.com/) — official guide to building Python web APIs.
+- [Prefect documentation](https://docs.prefect.io/v3/get-started) — workflow orchestration for Python data and ML pipelines.
+- [GitHub Actions documentation](https://docs.github.com/en/actions) — automation for continuous integration, deployment, and scheduled workflows.
+- [DVC documentation](https://doc.dvc.org/start) — data versioning for reproducible machine-learning projects.
+- [MLflow Tracking](https://mlflow.org/docs/latest/ml/tracking/) — experiment and model-run tracking.
