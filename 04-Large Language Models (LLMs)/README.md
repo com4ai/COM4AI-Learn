@@ -119,7 +119,6 @@ The following practical questions demonstrate how the concepts introduced in the
 |---|--------|--------------------|
 | P01 | `How-to-talk-to-an-LLM` | How do I talk to a Large Language Model (LLM)? |
 | P02 | `How-to-build-a-chatbot` | How do I build a chatbot? |
-| P03 | `How-to-make-an-AI-remember-conversations` | How do I make an AI remember previous conversations? |
 | P04 | `How-to-build-RAG` | How do I build a Retrieval-Augmented Generation (RAG) system? |
 
 Each folder is self-contained and includes explanations, implementation steps, source code, and practical examples. You can work through them in order or jump directly to the topic that interests you.
