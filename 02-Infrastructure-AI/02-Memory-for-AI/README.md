@@ -59,6 +59,34 @@ An AI system moves data between these levels. For example, it may load a model f
 
 **High-Bandwidth Memory (HBM)** is important for modern AI because large models repeatedly read weights and intermediate data. HBM uses vertically stacked memory dies and a very wide connection to the accelerator, providing much higher bandwidth than ordinary system RAM. HBM is common in data-center AI hardware, while DDR, LPDDR, and GDDR remain common in other systems.
 
+## Memory Vendors and AI-Focused Specifications
+
+Memory manufacturers build the DRAM and HBM packages, while GPU and accelerator vendors integrate those packages into complete AI systems. When comparing memory for AI, distinguish the specification of **one HBM stack** from the total memory capacity and bandwidth of an entire GPU or server.
+
+The three major suppliers of HBM for AI systems are **SK hynix**, **Samsung**, and **Micron**. Their products evolve quickly, but the following published HBM3E examples show the kind of specifications to compare:
+
+| Vendor | Representative HBM product | Example published specifications | Why it matters for AI |
+|---|---|---|---|
+| **SK hynix** | HBM3E | 12-layer stack with 36 GB capacity; its 8-layer HBM3E has a published bandwidth of up to 1.18 TB/s. | Higher-capacity stacks help fit larger models and longer contexts close to the accelerator. |
+| **Samsung** | HBM3E 12H | 36 GB capacity, 12 stacked layers, and up to 1,280 GB/s bandwidth. | High capacity and bandwidth reduce the need to move model data to slower memory. |
+| **Micron** | HBM3E | 24 GB (8-high) or 36 GB (12-high), more than 1.2 TB/s bandwidth, and data rates above 9.2 Gb/s per pin. | High bandwidth keeps parallel accelerator cores supplied with model weights and activations. |
+
+These numbers describe a memory package, not the complete accelerator. A GPU can contain several HBM stacks, so its total memory and aggregate bandwidth are much larger. For example, a system-level product specification may report the GPU's total HBM capacity, aggregate bandwidth, compute performance, interconnect, cooling, and power requirements.
+
+When selecting an AI memory system, compare these specifications:
+
+| Specification | Question to ask | AI impact |
+|---|---|---|
+| **Memory generation** | Is it DDR, LPDDR, GDDR, HBM3E, HBM4, or another technology? | Newer HBM generations generally target higher bandwidth and capacity for accelerators. |
+| **Capacity** | How many GB are available per stack and per accelerator? | Determines whether model weights, activations, and the KV cache fit. |
+| **Bandwidth** | How many GB/s or TB/s can the memory deliver? | Influences training throughput and token-generation speed for memory-bound models. |
+| **Data rate** | How many Gb/s can each pin transfer? | Contributes to the maximum bandwidth of the memory interface. |
+| **Stack height and density** | How many memory dies are stacked, and what is the capacity of each die? | Enables more capacity near the processor without expanding the board area. |
+| **Power and thermals** | What energy and cooling requirements does the memory add? | Affects operating cost, density, and sustained performance in data centers. |
+| **Reliability features** | Which error detection, correction, and validation features are supported? | Important for long-running training and production inference. |
+
+Vendor specifications should be read alongside the accelerator and server documentation: a memory package can be fast, but the final AI system is also limited by the processor, interconnect, software, power, and cooling design.
+
 ## Memory Access During AI Workloads
 
 Different AI tasks stress memory in different ways:
@@ -91,4 +119,7 @@ Understanding RAM, VRAM, storage, caching, latency, and bandwidth helps you choo
 - [NVIDIA GPU Performance Background](https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html) — official explanation of GPU memory hierarchy and bandwidth.
 - [NVIDIA Grace Performance Tuning Guide](https://docs.nvidia.com/dccpu/grace-perf-tuning-guide/os-settings.html) — official discussion of memory locality, bandwidth, and latency considerations.
 - [Micron High-Bandwidth Memory](https://www.micron.com/products/memory/hbm) — overview of HBM for AI training and inference.
+- [SK hynix HBM3E design overview](https://news.skhynix.com/rulebreakers-revolutions-design-scheme-elevates-hbm3e/) — published HBM3E stack and bandwidth information.
+- [Samsung HBM3E 12H announcement](https://news.samsung.com/global/samsung-develops-industry-first-36gb-hbm3e-12h-dram) — published 36 GB and 1,280 GB/s HBM3E specifications.
+- [Micron HBM3E](https://www.micron.com/products/memory/hbm/hbm3e) — published HBM3E capacity, bandwidth, and data-rate specifications.
 - [NVIDIA HGX AI Factory components](https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/components.html) — current examples of HBM capacity and bandwidth in AI systems.
