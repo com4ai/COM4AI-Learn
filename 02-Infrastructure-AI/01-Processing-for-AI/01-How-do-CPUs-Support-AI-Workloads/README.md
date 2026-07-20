@@ -102,7 +102,7 @@ CPUs are not disappearing from AI systems. They are evolving to support the work
 - CPUs provide flexible, general-purpose processing for AI systems.
 - CPUs run much more than the model itself: they handle data, application logic, and coordination.
 - Multiple CPU cores can process independent work in parallel.
-- Larger deep-learning workloads often use GPUs or TPUs, which are covered in their own lessons.
+- Larger deep-learning workloads often use GPUs or specialized AI accelerators, which are covered in their own lessons.
 
 ## References
 
