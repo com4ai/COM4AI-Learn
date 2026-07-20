@@ -172,14 +172,6 @@ Networking is also used to move AI assets:
 | **Uneven traffic** | Some model servers are overloaded while others are idle. | Use load balancing, queues, and autoscaling. |
 | **Insecure communication** | Prompts, data, or credentials may be exposed. | Use TLS, authentication, authorization, network segmentation, and secret management. |
 
-## Lessons in This Section
-
-1. [How do AI Systems Communicate?](01-How-do-AI-Systems-Communicate/README.md)
-2. [How does Latency Affect Real-Time AI Applications?](02-How-does-Latency-Affect-Real-Time-AI-Applications/README.md)
-3. [How does Bandwidth Affect AI Data and Model Transfer?](03-How-does-Bandwidth-Affect-AI-Data-and-Model-Transfer/README.md)
-4. [How do Distributed AI Systems Work?](04-How-do-Distributed-AI-Systems-Work/README.md)
-5. [How are AI Models Served to Users?](05-How-are-AI-Models-Served-to-Users/README.md)
-
 ## References
 
 - [gRPC: About](https://grpc.io/about/) — official overview of gRPC, streaming, load balancing, tracing, and authentication.
