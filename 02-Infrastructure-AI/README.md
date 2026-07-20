@@ -8,7 +8,6 @@ Infrastructure AI covers the compute, memory, storage, and networking systems th
 │   ├── 01-How-do-CPUs-Support-AI-Workloads/
 │   ├── 02-How-do-GPUs-Accelerate-AI/
 │   ├── 03-What-are-AI-Accelerators/
-│   └── 05-How-does-Parallel-Processing-Accelerate-AI/
 ├── 02-Memory-for-AI/
 │   ├── 01-How-does-RAM-Support-AI-Workloads/
 │   ├── 02-How-does-GPU-Memory-Support-AI/
