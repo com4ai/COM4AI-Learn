@@ -137,6 +137,33 @@ GPU memory (VRAM)
 
 If a model does not fit in GPU memory, it may fail to run, run more slowly by moving data between devices, or require techniques such as model quantization, offloading, or multiple GPUs.
 
+## GPU Vendors and Hardware Ranges
+
+The AI-GPU market changes quickly. The table below is a **July 2026 snapshot** of representative hardware ranges from major vendors. It is intended to show the scale of available hardware, not to recommend a particular GPU.
+
+| Vendor | Parallel compute units | Memory capacity range | Peak memory-bandwidth range | Important AI hardware capabilities |
+|---|---|---|---|---|
+| **NVIDIA** | Up to **24,064 CUDA cores** in a current professional GPU; data-center GPUs also use Tensor Cores | **96–180 GB** | about **1.6–8 TB/s** | Tensor Cores; high-bandwidth HBM memory in data-center hardware; high-speed multi-GPU interconnect |
+| **AMD** | **64–256 compute units** | **32–288 GB** | about **0.64–8 TB/s** | Matrix Cores; HBM memory in data-center hardware; multi-GPU Infinity Fabric |
+| **Intel** | **20–128 Xe cores** | **24–128 GB** | about **456 GB/s–3.28 TB/s** | Xe Matrix Extensions (XMX); high-bandwidth memory in data-center hardware; multi-GPU Xe Link |
+
+Core counts are **not directly comparable across vendors**. NVIDIA CUDA cores, AMD compute units, and Intel Xe cores have different designs and capabilities. For AI, memory capacity, memory bandwidth, supported numerical formats, software support, and real benchmark results usually matter more than the raw core count.
+
+When comparing GPU specifications, consider:
+
+- **VRAM capacity** — whether the model and its working data fit on the card;
+- **memory bandwidth** — how quickly the processor can read weights and activations;
+- **precision support** — such as FP16, BF16, FP8, or lower-precision formats used by AI models;
+- **interconnect and scale** — how efficiently multiple GPUs communicate;
+- **software compatibility** — whether the framework, drivers, and libraries you plan to use support the GPU well; and
+- **power and cooling** — whether your computer or server can supply the required power and remove the heat.
+
+These ranges are meaningful only in the context of the workload, precision, batch size, software stack, power, and budget.
+
+## How to Choose a GPU for Learning
+
+For a first local AI project, you usually do not need a data-center GPU. Start with a supported consumer or workstation GPU that has enough VRAM for the models you want to run, and use the software ecosystem supported by that card. Cloud GPUs are often more practical when you need a large model only occasionally. High-memory, high-bandwidth data-center GPUs are intended for servers and multi-GPU deployments, not typical personal computers.
+
 ## Why GPUs Are Essential for Modern AI
 
 GPUs are not required for every AI project. Classical machine-learning models, small datasets, and many hosted-API applications can run well without one.
@@ -173,3 +200,6 @@ The key idea is not that a GPU is universally better than a CPU. It is better fo
 - [NVIDIA CUDA Programming Guide: Introduction](https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/introduction.html) — official overview of GPU throughput, memory bandwidth, and CPU/GPU design goals.
 - [NVIDIA CUDA Programming Guide: Programming Model](https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/programming-model.html) — official explanation of parallel threads, blocks, and grids.
 - [NVIDIA CUDA Best Practices Guide](https://docs.nvidia.com/cuda/archive/12.8.2/cuda-c-best-practices-guide/index.html) — official guidance on parallel work and host-to-device data transfer.
+- [NVIDIA B200 and GB200 systems](https://www.nvidia.com/en-us/data-center/dgx-b200/) and [RTX PRO 6000 Blackwell](https://www.nvidia.com/en-us/data-center/rtx-pro-6000-blackwell-server-edition/) — current NVIDIA AI and professional GPU examples.
+- [AMD Instinct MI350 Series](https://www.amd.com/en/products/accelerators/instinct/mi350.html) and [Radeon AI PRO R9700](https://www.amd.com/en/products/graphics/workstations/radeon-ai-pro/ai-9000-series/amd-radeon-ai-pro-r9700.html) — current AMD data-center and local-AI GPU examples.
+- [Intel Data Center GPU Max Series](https://www.intel.com/content/www/us/en/products/details/discrete-gpus/data-center-gpu/max-series/products.html) and [Intel Arc Pro B60](https://www.intel.com/content/www/us/en/products/sku/243916/intel-arc-pro-b60-graphics/specifications.html) — current Intel data-center and workstation GPU examples.
