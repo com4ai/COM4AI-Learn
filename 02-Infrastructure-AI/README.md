@@ -5,21 +5,21 @@ Infrastructure AI covers the compute, memory, storage, and networking systems th
 ```text
 02-Infrastructure-AI/
 ├── 01-Processing-for-AI/
-│   ├── 01-What-is-a-CPU/
-│   ├── 02-What-is-a-GPU/
-│   ├── 03-What-is-a-TPU/
-│   ├── 04-How-do-CPUs-and-GPUs-Differ/
-│   └── 05-How-does-Parallel-Processing-Work/
+│   ├── 01-How-do-CPUs-Support-AI-Workloads/
+│   ├── 02-How-do-GPUs-Accelerate-AI/
+│   ├── 03-How-do-TPUs-Accelerate-AI/
+│   ├── 04-How-do-CPUs-and-GPUs-Differ-for-AI/
+│   └── 05-How-does-Parallel-Processing-Accelerate-AI/
 ├── 02-Memory-for-AI/
-│   ├── 01-What-is-RAM/
-│   ├── 02-What-is-GPU-Memory-VRAM/
+│   ├── 01-How-does-RAM-Support-AI-Workloads/
+│   ├── 02-How-does-GPU-Memory-Support-AI/
 │   ├── 03-How-does-Model-Size-Affect-Memory/
-│   ├── 04-What-is-Storage-for-AI/
-│   └── 05-What-is-Caching-in-AI-Systems/
+│   ├── 04-How-does-Storage-Support-AI/
+│   └── 05-How-does-Caching-Improve-AI-Systems/
 └── 03-Networking-for-AI/
     ├── 01-How-do-AI-Systems-Communicate/
-    ├── 02-What-is-Network-Latency/
-    ├── 03-What-is-Bandwidth/
+    ├── 02-How-does-Latency-Affect-Real-Time-AI-Applications/
+    ├── 03-How-does-Bandwidth-Affect-AI-Data-and-Model-Transfer/
     ├── 04-How-do-Distributed-AI-Systems-Work/
     └── 05-How-are-AI-Models-Served-to-Users/
 ```
