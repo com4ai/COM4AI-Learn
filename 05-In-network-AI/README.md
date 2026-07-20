@@ -83,6 +83,30 @@ In-network AI is not usually built with a single Python library. It requires har
 
 For example, NVIDIA SHARP offloads selected MPI and machine-learning collective operations from CPUs and GPUs into the network. NVIDIA documents integration through collective libraries such as NCCL, MPI, and UCC. BlueField DPUs combine a high-speed network interface with programmable Arm cores and specialized networking, storage, and security accelerators; the DOCA SDK is used to develop services for that environment.
 
+## Vendors in the In-Network AI Market
+
+The in-network AI market includes several layers: DPU and SmartNIC vendors, switch and Ethernet-fabric vendors, accelerator vendors, and server vendors that combine these components into deployable systems. Product availability and specifications change quickly, so use this as a map of the ecosystem rather than a procurement guide.
+
+| Vendor or ecosystem | Relevant products or technologies | Role in in-network AI |
+|---|---|---|
+| **NVIDIA Networking** | BlueField DPUs and SuperNICs, ConnectX NICs, InfiniBand, Spectrum Ethernet, SHARP, DOCA, NCCL. | Provides DPU-based infrastructure offload, RDMA networking, and in-network collective reduction for GPU AI clusters. |
+| **AMD Pensando** | Pensando DPUs, Pollara AI NIC, P4-programmable data paths, Pensando software. | Provides programmable Ethernet data paths for AI-cluster front-end networking, storage, security, observability, and traffic offload. AMD publishes up to 400 Gb/s for the Pollara 400 AI NIC. |
+| **Intel and Altera** | Intel IPUs, Ethernet adapters, FPGA IPUs, P4, DPDK, and IPDK. | Offers infrastructure offload and programmable networking for cloud and AI environments; Intel's E2100 IPU supports up to 200 GbE, while FPGA IPUs target programmable data paths. |
+| **Broadcom** | Ethernet switching silicon, AI Ethernet NICs, PCIe switches, and high-radix data-center fabric technologies. | Supplies components used by many system vendors to build large Ethernet AI fabrics and scale-up or scale-out connectivity. |
+| **Arista, Cisco, HPE Aruba, and other network-system vendors** | Data-center Ethernet switches, network operating systems, telemetry, routing, and automation. | Build and operate the network fabric around AI servers; some platforms integrate or support programmable services and DPU-based designs. |
+| **Server and cloud providers** | AI servers, rack-scale systems, managed network fabrics, and cloud networking services. | Integrate NICs, DPUs, switches, accelerators, storage, and orchestration into an operational AI platform. |
+
+When comparing vendors, evaluate more than port speed. Important questions include:
+
+| Area | What to evaluate |
+|---|---|
+| **Programmability** | Can the data path be programmed with P4, a DPU SDK, FPGA logic, or supported APIs? |
+| **Offload capabilities** | Which networking, storage, security, telemetry, RDMA, or collective operations can move off the host? |
+| **AI-framework integration** | Does the platform work with NCCL, RCCL, MPI, UCX, Kubernetes, and the chosen accelerator stack? |
+| **Fabric and topology** | Does it support InfiniBand, Ethernet, RoCE, Ultra Ethernet, or the topology needed by the cluster? |
+| **Performance** | Compare usable bandwidth, latency, congestion management, packet-processing capacity, and CPU overhead—not only a headline link speed. |
+| **Operations** | Consider drivers, observability, security isolation, upgrades, support, and interoperability with existing hardware. |
+
 ## Limits and Challenges
 
 In-network AI does not mean putting a full large language model inside an Ethernet switch. Network devices are designed for predictable, high-speed data-path work and have strict limits on memory, programmability, precision, and execution time.
@@ -104,4 +128,9 @@ In-network AI is most valuable when an operation is simple, repeated frequently,
 - [NVIDIA SHARP Collective Library](https://docs.nvidia.com/networking/display/sharpv261/nvidia%2Bsharp%2Bcollective%2Blibrary) — integration information for MPI, NCCL, and other communication runtimes.
 - [NVIDIA BlueField DPU overview](https://docs.nvidia.com/networking/display/bluefieldbmcv2601/overview) — official description of DPU networking, storage, security, and software-defined infrastructure offloads.
 - [NVIDIA BlueField BSP](https://docs.nvidia.com/networking/display/bluefieldbsp453) — documentation for the BlueField software environment and DOCA framework.
+- [AMD Pensando DPU Technology](https://www.amd.com/en/products/data-processing-units/pensando.html) — official overview of AMD Pensando programmable DPUs for AI-cluster networking and infrastructure offload.
+- [AMD Pensando Pollara 400 AI NIC](https://www.amd.com/en/products/network-interface-cards/pensando.html) — official product overview of the P4-programmable 400 Gb/s AI networking interface card.
+- [Intel Infrastructure Processing Unit](https://www.intel.com/content/www/us/en/products/details/networking/ipu.html) — official overview of IPU networking, infrastructure offload, and AI infrastructure use cases.
+- [Altera FPGA Infrastructure Processing Unit](https://www.intel.com/content/www/us/en/products/details/fpga/platforms/ipu.html) — official description of FPGA-based programmable IPUs for AI, RDMA, and infrastructure workloads.
+- [Broadcom Networking for AI Clusters](https://www.broadcom.com/topics/what-is-networking-for-ai) — overview of AI Ethernet fabrics and high-radix networking.
 - [SwitchML: Scaling Distributed Machine Learning with In-Network Aggregation](https://arxiv.org/abs/1903.06701) — research paper on programmable-switch aggregation for distributed training.
