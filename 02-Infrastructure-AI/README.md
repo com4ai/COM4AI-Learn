@@ -14,10 +14,14 @@ Infrastructure AI covers the compute, memory, storage, and networking systems th
 │   ├── 03-How-does-Model-Size-Affect-Memory/
 │   ├── 04-How-does-Storage-Support-AI/
 │   └── 05-How-does-Caching-Improve-AI-Systems/
-└── 03-Networking-for-AI/
+├── 03-Networking-for-AI/
     ├── 01-How-do-AI-Systems-Communicate/
     ├── 02-How-does-Latency-Affect-Real-Time-AI-Applications/
     ├── 03-How-does-Bandwidth-Affect-AI-Data-and-Model-Transfer/
     ├── 04-How-do-Distributed-AI-Systems-Work/
     └── 05-How-are-AI-Models-Served-to-Users/
+└── 04-Platforms-and-Orchestration-for-AI/
+    ├── 01-How-do-Virtualization-and-Containers-Support-AI/
+    ├── 02-How-does-Kubernetes-Run-AI-Workloads/
+    └── 03-How-are-AI-Workloads-Scheduled-and-Scaled/
 ```
