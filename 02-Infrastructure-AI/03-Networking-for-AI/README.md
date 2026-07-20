@@ -52,6 +52,24 @@ Common communication methods include:
 
 HTTPS is common at the public boundary because it works well with browsers and API clients. gRPC is often used inside a platform because it supports efficient remote procedure calls and bidirectional streaming over HTTP/2. During large distributed training, specialized collective communication libraries such as NCCL coordinate data exchange among GPUs.
 
+## Communication Types and Enabling Tools
+
+The diagram below separates the two main communication paths in an AI system: **client-to-server** traffic for using an AI application, and **server-to-server** traffic for running an AI platform or training cluster.
+
+![AI communication paths: client-to-server APIs and server-to-server AI interconnects](ai-communication-paths.png)
+
+| Communication path | Type of communication | What it carries | Common tools or software |
+|---|---|---|---|
+| **Client → API gateway** | HTTPS / REST | Prompts, uploaded files, authentication, and JSON responses. | FastAPI, Flask, Django, Express, API gateways, NGINX, Envoy. |
+| **Client ↔ model server** | Streaming HTTP, Server-Sent Events, or WebSocket | Generated tokens or other real-time updates. | FastAPI streaming, OpenAI-compatible servers, NGINX, Envoy, browser or mobile SDKs. |
+| **Application ↔ internal AI service** | gRPC | Embedding, reranking, moderation, retrieval, or model-service calls. | gRPC, Protocol Buffers, Envoy, service mesh software. |
+| **Application → background worker** | Message queue or event stream | Documents to ingest, batch jobs, evaluation tasks, and notifications. | Kafka, RabbitMQ, Redis, Celery, cloud queue services. |
+| **GPU ↔ GPU in one server** | PCIe, NVLink/NVSwitch, or Infinity Fabric/xGMI | Model shards, activations, gradients, and peer-to-peer memory transfers. | CUDA, NCCL, ROCm, RCCL, NVIDIA Fabric Manager. |
+| **GPU server ↔ GPU server** | InfiniBand or Ethernet with RoCE/RDMA | Distributed-training collectives, model-parallel traffic, checkpoints, and large datasets. | NCCL, MPI, UCX, RDMA drivers, NVIDIA ConnectX or BlueField software, Kubernetes Network Operator. |
+| **Service ↔ service in a cluster** | TCP/IP, HTTP, gRPC, or service-mesh traffic | Requests among model servers, databases, vector stores, and observability systems. | Kubernetes Services and DNS, Istio, Linkerd, Envoy, CoreDNS. |
+
+These tools work at different layers. For example, FastAPI creates an HTTP API, NGINX or Envoy can route and protect that API, Kubernetes can discover and load-balance services, and NCCL or RCCL coordinates high-speed GPU communication during distributed training.
+
 ## AI Interconnects: PCIe, NVLink, and RDMA
 
 Not all AI communication crosses a conventional IP network. AI infrastructure also relies on **interconnects** that move data within a server or directly between servers. These links are essential because model parallelism, training synchronization, and GPU-to-GPU transfers can move far more data than a normal application request.
