@@ -87,6 +87,122 @@ Response to the user
 
 Each part can be packaged separately. Later, an orchestration platform such as Kubernetes can run several copies of these containers, restart failed copies, and distribute them across available machines.
 
+## Example: Containerize a Small AI API
+
+This example packages a small Python API in a Docker image. The API accepts text and returns a simple classification result. The classification function is deliberately small so the example focuses on **containerization**; in a real project, replace it with code that loads and calls your model.
+
+Create a folder named `ai-api` with these files:
+
+```text
+ai-api/
+├── app.py
+├── requirements.txt
+└── Dockerfile
+```
+
+### 1. Create the API
+
+`app.py`:
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+
+class PredictionRequest(BaseModel):
+    text: str
+
+
+@app.post("/predict")
+def predict(request: PredictionRequest):
+    text = request.text.lower()
+    label = "positive" if "good" in text or "great" in text else "other"
+
+    return {"text": request.text, "label": label}
+```
+
+`requirements.txt`:
+
+```text
+fastapi
+uvicorn[standard]
+```
+
+### 2. Create the Dockerfile
+
+A `Dockerfile` tells Docker how to build the application image.
+
+```dockerfile
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app.py .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+What each instruction does:
+
+| Dockerfile instruction | Purpose |
+|---|---|
+| `FROM` | Starts from an existing Python runtime image. |
+| `WORKDIR` | Sets `/app` as the working folder inside the container. |
+| `COPY` | Copies project files into the image. |
+| `RUN` | Installs the Python dependencies while the image is being built. |
+| `EXPOSE` | Documents that the API listens on port 8000. |
+| `CMD` | Starts the API whenever a container starts. |
+
+### 3. Build and Run the Container
+
+From the `ai-api` folder, run:
+
+```bash
+docker build -t ai-api:1.0 .
+docker run --rm -p 8000:8000 ai-api:1.0
+```
+
+The first command builds an image named `ai-api:1.0`. The second starts a container from that image and maps your computer's port 8000 to port 8000 inside the container.
+
+In another terminal, send a request:
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"text":"This is a great example"}'
+```
+
+Expected response:
+
+```json
+{"text":"This is a great example","label":"positive"}
+```
+
+The same image can be run by another developer, a test server, or Kubernetes, without separately installing Python, FastAPI, or Uvicorn on each environment.
+
+### 4. Add a Real Model Later
+
+For a real AI service, the application code can load a model at startup:
+
+```python
+# Example only: load your chosen model here when the container starts.
+# model = load_model("/models/my-model")
+
+@app.post("/predict")
+def predict(request: PredictionRequest):
+    # result = model.predict(request.text)
+    return {"result": "replace this with the model output"}
+```
+
+For large models, keep in mind where model weights come from. You can include small fixed assets in the image, download a model during startup, or mount model storage into the container. The best choice depends on model size, update frequency, startup time, and deployment platform.
+
 ## Key Takeaways
 
 - Virtualization creates isolated virtual computers on shared physical hardware.
