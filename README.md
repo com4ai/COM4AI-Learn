@@ -10,7 +10,7 @@
 - AI Fundamentals
 - Machine Learning
 - Deep Learning
-- Large Language Models (LLMs)
+- Generative AI
 - Retrieval-Augmented Generation (RAG)
 - AI Agents & Multi-Agent Systems
 - MLOps
